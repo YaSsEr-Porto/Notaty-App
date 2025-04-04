@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/sort"
+        android:icon="@drawable/ic_sort"
+        android:title="Sort"
+        app:showAsAction="never">
+        <menu>
+            <item
+                android:id="@+id/sort_by_title"
+                android:title="Sort by Title" />
+
+            <item
+                android:id="@+id/sort_by_date"
+                android:title="Sort by Date" />
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/trash"
+        android:icon="@drawable/ic_trash"
+        android:iconTint="#575757"
+        android:title="Trash" />
+
+    <item
+        android:id="@+id/about"
+        android:icon="@drawable/ic_info"
+        android:iconTint="#575757"
+        android:title="About" />
+
+</menu>
