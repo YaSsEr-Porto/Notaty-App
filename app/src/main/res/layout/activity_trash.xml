@@ -3,33 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/trash"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="16dp">
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/restore_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Restore"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Toolbar
-        android:id="@+id/trash_toolbar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@+id/remove_all_btn"
-        app:layout_constraintStart_toEndOf="@+id/restore_btn"
-        app:layout_constraintTop_toTopOf="@id/restore_btn" />
+    android:layout_height="match_parent">
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/remove_all_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="16dp"
         android:text="Empty Trash"
-        app:layout_constraintBottom_toBottomOf="@+id/restore_btn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/restore_btn" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/trash_rv"
@@ -55,14 +38,14 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="350dp"
-            android:src="@drawable/arrow" />
+            android:layout_height="300dp"
+            android:src="@drawable/trash_temp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Write ur first note!"
+            android:text="Your Trash is Empty!"
             android:textColor="@android:color/darker_gray"
             android:textSize="18sp" />
 
