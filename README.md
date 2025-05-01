@@ -44,4 +44,3 @@ For modern UI components like buttons, cards, floating action buttons, and searc
 
 Room Database:
 For local persistence of notes, integrated with Firebase for seamless cloud sync.
-
