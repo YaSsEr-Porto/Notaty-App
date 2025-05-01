@@ -1,13 +1,15 @@
-package com.example.to_dolist
+package com.example.to_dolist.ui.fragments
 
 import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.ListPreference
 import androidx.preference.PreferenceFragmentCompat
+import com.example.to_dolist.R
 
 class SettingsFragment() : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+
         setPreferencesFromResource(R.xml.preferences, rootKey)
 
         val themePreference = findPreference<ListPreference>("theme")
@@ -18,7 +20,6 @@ class SettingsFragment() : PreferenceFragmentCompat() {
     }
 
     fun saveThemePreference(theme: String) {
-
         val sharedPreferences = requireActivity().getSharedPreferences("ThemePrefs", MODE_PRIVATE)
         sharedPreferences.edit().putString("theme", theme).apply()
 
@@ -27,9 +28,5 @@ class SettingsFragment() : PreferenceFragmentCompat() {
             "dark" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             "system" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         }
-
-        val activity = requireActivity()
-        activity.window.setWindowAnimations(R.style.ThemeTransition)
-        activity.recreate()
     }
 }
