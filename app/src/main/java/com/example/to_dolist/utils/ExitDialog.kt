@@ -1,4 +1,4 @@
-package com.example.to_dolist
+package com.example.to_dolist.utils
 
 import android.app.AlertDialog
 import android.app.Dialog
