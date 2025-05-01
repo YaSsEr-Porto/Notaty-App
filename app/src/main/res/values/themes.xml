@@ -3,6 +3,9 @@
     <style name="Base.Theme.ToDoList" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+        <item name="backgroundColor">#FFFFFF</item>
+        <item name="colorOnBackground">#000000</item>
     </style>
 
     <style name="Theme.ToDoList" parent="Base.Theme.ToDoList" />
@@ -12,10 +15,6 @@
         <item name="cornerSize">50%</item>
     </style>
 
-    <style name="ThemeTransition">
-        <item name="android:windowAnimationStyle">@anim/fade</item>
-    </style>
-
     <style name="Theme.MyApp" parent="Theme.Material3.DayNight">
         <!-- Use Material 3 Colors -->
         <item name="colorPrimary">@color/purple_500</item>
@@ -23,4 +22,13 @@
         <item name="colorSurface">@color/background_light</item>
         <item name="colorOnSurface">@color/text_dark</item>
     </style>
+
+    <style name="CustomPopupMenuTextStyle" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="CustomPopupMenu" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
 </resources>

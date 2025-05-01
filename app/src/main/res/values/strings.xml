@@ -6,4 +6,11 @@
     <string name="login">Login</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="sign_in_with_email">Sign in with Email</string>
+    <string name="new_user">New user?\nRegister now and Get Started!</string>
+    <string name="forgot_password">Forgot Password? Click here to reset it.</string>
+    <string name="app_logo">App Logo</string>
+    <string name="profile">I told u it\'s still\nUNDER CONSTRUCTION.😡🤬\nThe button may not work by first, second, third time\nI don\'t know exactly how many taps it will take to work.\nSo good luck getting out.🙄\nThink I\'ve trapped u here with Meeeee.🤡</string>
+    <string name="favourite_notes">Your favourite notes will be here!</string>
+    <string name="about">This is a very Special Lovingly made version just for You,\n\'\'Basma\'\'\nI hope u enjoy it ❤️\n. . .\nLama Neshoof A5rtha eh??🙄</string>
 </resources>
