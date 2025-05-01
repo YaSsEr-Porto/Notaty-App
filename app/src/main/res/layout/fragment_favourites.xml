@@ -27,16 +27,14 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="350dp"
-            android:src="@drawable/arrow" />
+            android:src="@drawable/favourites_temp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Write ur first note!"
+            android:text="@string/favourite_notes"
             android:textColor="@android:color/darker_gray"
             android:textSize="18sp" />
-
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
