@@ -1,4 +1,4 @@
-package com.example.to_dolist
+package com.example.to_dolist.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,13 +13,18 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.to_dolist.ui.fragments.FavouritesFragment
+import com.example.to_dolist.viewmodel.NoteViewModel
+import com.example.to_dolist.ui.fragments.NotesFragment
+import com.example.to_dolist.ui.fragments.ProfileFragment
+import com.example.to_dolist.R
+import com.example.to_dolist.ui.fragments.SettingsFragment
 import com.example.to_dolist.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var noteViewModel: NoteViewModel
     lateinit var binding: ActivityMainBinding
-    private lateinit var searchView: SearchView
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -37,8 +42,6 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        noteViewModel = ViewModelProvider(this)[NoteViewModel::class.java]
-
         setSupportActionBar(binding.toolbar)
         supportActionBar?.title = ""
 
@@ -55,28 +58,33 @@ class MainActivity : AppCompatActivity() {
 
         })
 
-        if (savedInstanceState == null) loadFragment(NotesFragment())
+        binding.botNav.setOnItemSelectedListener { item ->
+            val fragment = when (item.itemId) {
+                R.id.home -> NotesFragment()
+                R.id.fav -> FavouritesFragment()
+                R.id.usr -> ProfileFragment()
+                R.id.set -> SettingsFragment()
+                else -> null
+            }
+            fragment?.let { loadFragment(it) }
+            true
+        }
 
         binding.addTaskBtn.setOnClickListener {
             startActivity(Intent(this, AddNoteActivity::class.java))
         }
 
-        binding.botNav.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.home -> loadFragment(NotesFragment())
-                R.id.fav -> loadFragment(FavouritesFragment())
-                R.id.usr -> loadFragment(ProfileFragment())
-                R.id.set -> loadFragment(SettingsFragment())
-            }
-            true
-        }
+        noteViewModel = ViewModelProvider(this)[NoteViewModel::class.java]
+
+        if (savedInstanceState == null) loadFragment(NotesFragment()) else currentFragment()?.let { updateViewsForFragment(it) }
     }
 
+    private fun currentFragment(): Fragment? = supportFragmentManager.findFragmentById(R.id.frag_container)
+
     fun filterNotes(query: String) {
-        val currentFragment = supportFragmentManager.findFragmentById(R.id.frag_container)
-        when (currentFragment) {
-            is NotesFragment -> currentFragment.filterNotes(query)
-            is FavouritesFragment -> currentFragment.filterNotes(query)
+        when (val fragment = currentFragment()) {
+            is NotesFragment -> fragment.filterNotes(query)
+            is FavouritesFragment -> fragment.filterNotes(query)
         }
     }
 
@@ -86,7 +94,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val currentFragment = supportFragmentManager.findFragmentById(R.id.frag_container)
         return when (item.itemId) {
             R.id.sort_by_title -> {
                 noteViewModel.setSorting("title")
@@ -99,14 +106,13 @@ class MainActivity : AppCompatActivity() {
             }
 
             R.id.trash -> {
-                val i = Intent(this, TrashActivity::class.java)
-                startActivity(i)
+                startActivity(Intent(this, TrashActivity::class.java))
+                finish()
                 true
             }
 
             R.id.about -> {
-                val intent = Intent(this, AboutActivity::class.java)
-                startActivity(intent)
+                startActivity(Intent(this, AboutActivity::class.java))
                 true
             }
 
@@ -114,39 +120,33 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun updateToolbarForFragment(fragment: Fragment) {
-        when (fragment) {
-            is NotesFragment -> {
-                binding.toolbar.visibility = View.VISIBLE
-                binding.searchBarContainer.visibility = View.VISIBLE
-                binding.addTaskBtn.visibility = View.VISIBLE
-            }
+    fun updateViewsForFragment(fragment: Fragment) {
+        binding.toolbar.visibility = View.VISIBLE
 
-            is FavouritesFragment -> {
-                binding.toolbar.visibility = View.VISIBLE
-                binding.searchBarContainer.visibility = View.VISIBLE
-                binding.addTaskBtn.visibility = View.GONE
-            }
+        binding.searchBarContainer.visibility = when (fragment) {
+            is NotesFragment, is FavouritesFragment -> View.VISIBLE
+            else -> View.GONE
+        }
 
-            else -> {
-                binding.toolbar.visibility = View.GONE
-                binding.searchBarContainer.visibility = View.GONE
-                binding.addTaskBtn.visibility = View.GONE
-            }
+        binding.addTaskBtn.visibility = when (fragment) {
+            is NotesFragment -> View.VISIBLE
+            else -> View.GONE
         }
     }
 
     fun loadFragment(fragment: Fragment, tag: String? = null) {
         supportFragmentManager.beginTransaction().replace(R.id.frag_container, fragment, tag).commit()
-        updateToolbarForFragment(fragment)
+        updateViewsForFragment(fragment)
     }
 
     fun applySavedTheme() {
-        val sharedPreferences = getSharedPreferences("ThemePrefs", MODE_PRIVATE)
-        when (sharedPreferences.getString("theme", "system")) {
-            "light" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            "dark" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            "system" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        val themePref = getSharedPreferences("ThemePrefs", MODE_PRIVATE).getString("theme", "system")
+
+        val mode = when (themePref) {
+            "light" -> AppCompatDelegate.MODE_NIGHT_NO
+            "dark" -> AppCompatDelegate.MODE_NIGHT_YES
+            else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
         }
+        AppCompatDelegate.setDefaultNightMode(mode)
     }
 }
