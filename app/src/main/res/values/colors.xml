@@ -4,8 +4,11 @@
     <color name="white">#FFFFFFFF</color>
     <color name="red">#C30808</color>
     <color name="purple_500">#6200EE</color>
+    <color name="blue_700">#0091EA</color>
     <color name="background_light">#FFFFFF</color>
     <color name="text_dark">#121212</color>
     <color name="background_dark">#121212</color>
     <color name="text_light">#E0E0E0</color>
+    <color name="emailButtonColor">#D50000</color>
+    <color name="emailTextColor">#FFFFFF</color>
 </resources>
