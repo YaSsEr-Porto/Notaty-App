@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.services)
+    id("com.google.devtools.ksp")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -41,6 +43,7 @@ android {
 
 dependencies {
 
+    implementation(libs.firebase.firestore.ktx)
     implementation(libs.glide)
     implementation(libs.gson)
     implementation(libs.firebase.ui.auth)
@@ -56,4 +59,12 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation (libs.androidx.lifecycle.extensions)
+    implementation (libs.lifecycle.viewmodel.ktx)
+    implementation(libs.circleimageview)
+
 }
