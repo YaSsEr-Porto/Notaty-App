@@ -1,7 +1,7 @@
-#Note-Taking App
+# Note-Taking App
 A simple and interactive note-taking application built with Kotlin, Firebase, and modern Android development practices. This app allows users to create, manage, and organize their notes with options for favorites, deleting, and restoring notes. The app offers seamless synchronization with Firebase Cloud to store and retrieve notes. The user interface is designed to be clean, intuitive, and follows Material Design principles for an optimal user experience.
 
-##Features
+## Features
 User Authentication:
 Sign up and log in via Firebase Authentication (supports Google Sign-In and email/password sign-in). User details are stored in Firebase and can be accessed in the Profile screen.
 
@@ -29,7 +29,7 @@ The app follows Material Design guidelines, providing a clean and modern UI with
 - Trash Management:
 A dedicated Trash screen to restore or permanently delete notes, with easy swipe gestures for interacting with the notes.
 
-##Technologies Used
+## Technologies Used
 - Kotlin:
 The primary programming language for Android development.
 
