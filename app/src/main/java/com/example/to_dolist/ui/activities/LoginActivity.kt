@@ -12,14 +12,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
-import com.example.to_dolist.viewmodel.NoteViewModel
 import com.example.to_dolist.R
 import com.example.to_dolist.databinding.ActivityLoginBinding
+import com.example.to_dolist.viewmodel.NoteViewModel
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
+import androidx.core.content.edit
 
 class LoginActivity : AppCompatActivity() {
 
@@ -66,7 +67,7 @@ class LoginActivity : AppCompatActivity() {
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val newUserId = FirebaseAuth.getInstance().currentUser?.uid
-                    sharedPreferences.edit().putBoolean("rememberMe", binding.chkBox.isChecked).apply()
+                    sharedPreferences.edit() { putBoolean("rememberMe", binding.chkBox.isChecked) }
 
                     val oldUserId = getLastLoggedInUserId()
 
@@ -88,12 +89,12 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.googleBtn.setOnClickListener {
-            sharedPreferences.edit().putBoolean("rememberMe", true).apply()
+            sharedPreferences.edit() { putBoolean("rememberMe", true) }
             launchSignUpFlow(listOf(AuthUI.IdpConfig.GoogleBuilder().build()))
         }
 
         binding.emailBtn.setOnClickListener {
-            sharedPreferences.edit().putBoolean("rememberMe", true).apply()
+            sharedPreferences.edit() { putBoolean("rememberMe", true) }
             launchSignUpFlow(listOf(AuthUI.IdpConfig.EmailBuilder().build()))
         }
 
@@ -161,7 +162,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun saveLoggedInUserId(uid: String) {
-        sharedPreferences.edit().putString("loggedInUserId", uid).apply()
+        sharedPreferences.edit() { putString("loggedInUserId", uid) }
     }
 
     private fun getLastLoggedInUserId(): String? {
