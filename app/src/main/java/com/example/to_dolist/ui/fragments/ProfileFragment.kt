@@ -4,6 +4,7 @@ import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.content.SharedPreferences
 import android.icu.text.SimpleDateFormat
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -38,6 +39,8 @@ class ProfileFragment : Fragment() {
 
         if (user == null) showGuestLayout() else setupProfile()
 
+        loadSavedImages()
+
         return binding.root
     }
 
@@ -62,16 +65,22 @@ class ProfileFragment : Fragment() {
         loadUserData()
 
         val pickPI = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-            uri?.let { binding.profileImage.setImageURI(it) }
+            uri?.let {
+                binding.profileImage.setImageURI(it)
+                saveImage("pIPrefs", it)
+            }
         }
 
         val pickBI = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-            uri?.let { binding.profileBackground.setImageURI(it) }
+            uri?.let {
+                binding.profileBackground.setImageURI(it)
+                saveImage("BIPrefs", it)
+            }
         }
 
-        binding.pfFab.setOnClickListener { pickPI.launch("image/*") }
-
         binding.bgFab.setOnClickListener { pickBI.launch("image/*") }
+
+        binding.pfFab.setOnClickListener { pickPI.launch("image/*") }
 
         binding.btnLogout.setOnClickListener { logout() }
 
@@ -121,6 +130,20 @@ class ProfileFragment : Fragment() {
             }
             true
         }
+    }
+
+    private fun saveImage(key: String, uri: Uri) {
+        sharedPreferences = requireActivity().getSharedPreferences("ImagePrefs", MODE_PRIVATE)
+        sharedPreferences.edit() { putString(key, uri.toString()) }
+    }
+
+    fun loadSavedImages() {
+        sharedPreferences = requireActivity().getSharedPreferences("ImagePrefs", MODE_PRIVATE)
+        val pIUri = sharedPreferences.getString("pIPrefs", null)
+        val bIUri = sharedPreferences.getString("BIPrefs", null)
+
+        pIUri?.let { Glide.with(this).load(it).into(binding.profileImage) }
+        bIUri?.let { Glide.with(this).load(it).into(binding.profileBackground) }
     }
 
     fun loadUserData() {
